@@ -970,6 +970,7 @@ full_treble_only(`
     -shell
     userdebug_or_eng(`-su')
     -ueventd # uevent is granted create for this device, but we still neverallow I/O below
+    -system_server
   } vndbinder_device:chr_file rw_file_perms;
 ')
 full_treble_only(`
@@ -1324,7 +1325,7 @@ full_treble_only(`
 ')
 
 # Only system_server should be able to send commands via the zygote socket
-neverallow { domain -zygote -system_server } zygote:unix_stream_socket connectto;
+neverallow { domain -zygote -system_server -device_as_webcam } zygote:unix_stream_socket connectto;
 neverallow { domain -system_server } zygote_socket:sock_file write;
 
 neverallow { domain -system_server -webview_zygote -app_zygote } webview_zygote:unix_stream_socket connectto;
